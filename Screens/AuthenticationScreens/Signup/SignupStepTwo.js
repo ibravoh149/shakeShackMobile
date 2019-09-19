@@ -28,7 +28,7 @@ export const StepTwo = ({handleChange, backPress, continuePress, values}) => {
             style={inputStyle.container}
             placeholder="create password"
             onChangeText={text => handleChange('password', text)}
-            value={values.firstName}
+            value={values.password}
             secureTextEntry
             textContentType="password"
           />

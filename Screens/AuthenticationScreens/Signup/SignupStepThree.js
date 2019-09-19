@@ -1,7 +1,6 @@
 import React from "react";
 import { View,
   Text,
-  SafeAreaView,
   StyleSheet,
   Platform,
   TextInput, Switch } from "react-native";
@@ -54,11 +53,12 @@ import {fonts} from '../../../asset/font';
             
             </View>
               
-           
-
             <ButtonPrimary
               value={'Create Account'}
-              // onPress={continuePress}
+              onPress={continuePress}
+              showSpinner={values.showSpinner}
+              spinnerColor="#fff"
+              disabled
             />
           </View>
         </View>

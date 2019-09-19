@@ -19,27 +19,33 @@ export class SigninScreen extends React.Component {
       email: '',
       password: '',
       hasAccount: false,
+      isLoggedIn:true
     };
     this._handleChange = this._handleChange.bind(this);
-    this._onBackButtonPress=this._onBackButtonPress.bind(this);
-    this._handleSubmit=this._handleSubmit.bind(this)
+    this._onBackButtonPress = this._onBackButtonPress.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
+
+  // componentDidMount(){
+  //   if(this.state.isLoggedIn){
+  //     this.props.navigation.navigate("Home");
+  //   }
+  // }
 
   _handleChange = (name, text) => {
     this.setState({
       [name]: text,
     });
-
   };
 
-  _onBackButtonPress(){
-    this.props.navigation.navigate("Home")
+  _onBackButtonPress() {
+    this.props.navigation.navigate('Home');
   }
 
-  _handleSubmit(){
-    if(!this.state.hasAccount){
-      this.props.navigation.navigate("Signup", {
-        email:this.state.email
+  _handleSubmit() {
+    if (!this.state.hasAccount) {
+      this.props.navigation.navigate('Signup', {
+        email: this.state.email,
       });
     }
   }
@@ -60,7 +66,7 @@ export class SigninScreen extends React.Component {
             <TextInput
               style={inputStyle.container}
               placeholder="Enter Your email"
-              onChangeText={(text)=>this._handleChange('email', text)}
+              onChangeText={text => this._handleChange('email', text)}
               value={this.state.email}
               // textContentType="emailAddress"
             />
@@ -69,7 +75,7 @@ export class SigninScreen extends React.Component {
               <TextInput
                 style={inputStyle.container}
                 placeholder="Enter Your Password"
-                onChangeText={(text)=>this._handleChange('password', text)}
+                onChangeText={text => this._handleChange('password', text)}
                 value={this.state.password}
                 secureTextEntry
                 textContentType="password"

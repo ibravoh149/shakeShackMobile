@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 // import {BackButton} from '../../Component/UIComponent/backButton';
 // import {ButtonPrimary} from '../../Component/UIComponent/Button';
-// import {inputStyle} from '../../asset/styles/inputTextStyle';
+// import {inputStyle} from '../../../asset/styles/inputTextStyle';
 // import {fonts} from '../../asset/font';
 
 import { StepOne } from "./SignupStepOne";
@@ -27,21 +27,27 @@ export class SignupScreen extends React.Component {
       phone:"",
       zipCode:"",
       signedForPromotionalEmail:false,
-      step:1
+      step:1,
+      showSpinner:false
     };
     this._renderSteps=this._renderSteps.bind(this);
     this._onBackPress=this._onBackPress.bind(this);
     this._handleChange=this._handleChange.bind(this);
     this._onContinuePress=this._onContinuePress.bind(this);
-    this._toggleCheckBox=this._toggleCheckBox.bind(this)
+    this._toggleCheckBox=this._toggleCheckBox.bind(this);
+    this._submit=this._submit.bind(this);
   }
+
+
 
   componentDidMount(){
     const { navigation } = this.props
         const email = navigation.getParam("email", "john@snow.com");
         this.setState({
             email
-        })
+        });
+
+        
   }
 
   _handleChange = (name, text) => {
@@ -61,9 +67,14 @@ export class SignupScreen extends React.Component {
   }
 
   _onContinuePress(){
-    this.setState({
-      step:this.state.step+1
-    })
+    if(this.state.step === 3){
+      this._submit();
+    }else{
+      this.setState({
+        step:this.state.step+1
+      })
+    }
+    
   }
 
   _toggleCheckBox(){
@@ -72,13 +83,27 @@ export class SignupScreen extends React.Component {
     })
   }
 
+  _submit(){
+    this.setState({
+      showSpinner:true
+    });
+    this.props.navigation.navigate("Map")
+  }
 
+
+  /**
+   *
+   *
+   * @param {*} step
+   * @returns
+   * @memberof SignupScreen
+   */
   _renderSteps(step){
 
-    const {firstName, lastName, email, phone, zipCode, signedForPromotionalEmail, password}=this.state
+    const {firstName, lastName, email, phone, zipCode, signedForPromotionalEmail, password, showSpinner}=this.state
 
     const values={
-      firstName,lastName, email, phone, zipCode, signedForPromotionalEmail, password
+      firstName,lastName, email, phone, zipCode, signedForPromotionalEmail, password, showSpinner
     }
     switch (step) {
       case 1:
@@ -108,6 +133,7 @@ export class SignupScreen extends React.Component {
         break;
     }
   }
+
 
   render() {
     return (

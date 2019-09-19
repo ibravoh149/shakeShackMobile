@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     left:0,
     right:0,
     minHeight:20,
+    // backgroundColor:"blue"
     // padding:20
   }
 })

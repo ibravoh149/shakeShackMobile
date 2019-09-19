@@ -6,24 +6,22 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import {
   WelcomeScreen as Welcome,
   AuthLoadingScreen as AuthLoading,
+  MapViewScreen as MapView,
+  ListServiceProviderScreen as ListServiceProviders
 } from './Screens';
 
 import { SigninScreen as Signin } from "./Screens/AuthenticationScreens/Signin";
 import { SignupScreen as Signup } from "./Screens/AuthenticationScreens/Signup/Signup";
 
-const MainStack = createDrawerNavigator(
+
+const WelcomeStack = createDrawerNavigator(
   {
     Home: {screen: Welcome,
       navigationOptions: {
           header: null,
       },
     },
-    // Signin: {
-    //   screen: Signin,
-    //   // navigationOptions: {
-    //   //     header: null,
-    //   // },
-    // },
+    
   },
   // {
   //     contentComponent: DrawerNav
@@ -44,7 +42,32 @@ const AuthStack = createStackNavigator({
         header: null,
     },
   },
-});
+ 
+}); 
+
+const MainStack = createStackNavigator({
+
+  wel:{screen:WelcomeStack, navigationOptions:{header:null}},
+
+  ServiceProviders:{
+    screen:ListServiceProviders,
+    navigationOptions: {
+      header: null,
+  },
+  },
+
+  Map: {
+    screen: MapView,
+    navigationOptions: {
+        header: null,
+    },
+  },
+})
+
+
+
+
+
 
 const Navigator = createSwitchNavigator({
   // Splash: {
@@ -63,7 +86,10 @@ const Navigator = createSwitchNavigator({
 
   Auth: AuthStack,
 
-  Main: MainStack,
+  WelcomeStack: WelcomeStack,
+
+  Main:MainStack
+
 });
 
 const navigate = createAppContainer(Navigator);

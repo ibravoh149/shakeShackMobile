@@ -11,7 +11,7 @@ const icon2 = <BuggerIcon name="hamburger" size={20} color={colors.primary} />;
 
 const clock = <Clock name="restore-clock" size={20} color={colors.primary} />;
 
-const loggedIn = false;
+const loggedIn = true;
 
 
 const IsLoggedIn = props => {
@@ -26,6 +26,7 @@ const IsLoggedIn = props => {
     </View>
   );
 };
+
 
 const NotLoggedIn = props => {
   return (
@@ -43,22 +44,9 @@ const NotLoggedIn = props => {
 const _handleStartPress=(props)=>{
   if(!loggedIn){
     props.navigation.navigate("Signin")
+  }else{
+    props.navigation.navigate("ServiceProviders");
   }
-
-// Alert.alert(
-//   'Alert Title',
-//   'My Alert Msg',
-//   [
-//     {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-//     {
-//       text: 'Cancel',
-//       onPress: () => console.log('Cancel Pressed'),
-//       style: 'cancel',
-//     },
-//     {text: 'OK', onPress: () => console.log('OK Pressed')},
-//   ],
-//   {cancelable: false},
-// );
 }
 
 export const HomeTopContainer = props => {
@@ -155,7 +143,7 @@ const bottomContainerStyle = StyleSheet.create({
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     position: 'relative',
-    paddingBottom:20
+    paddingBottom:1
   },
 
   callToActionView: {
