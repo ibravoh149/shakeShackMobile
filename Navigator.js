@@ -7,21 +7,22 @@ import {
   WelcomeScreen as Welcome,
   AuthLoadingScreen as AuthLoading,
   MapViewScreen as MapView,
-  ListServiceProviderScreen as ListServiceProviders
+  ListServiceProviderScreen as ListServiceProviders,
+  SearchServiceProviderScreen as SearchServiceProvider,
+  Shack
 } from './Screens';
 
-import { SigninScreen as Signin } from "./Screens/AuthenticationScreens/Signin";
-import { SignupScreen as Signup } from "./Screens/AuthenticationScreens/Signup/Signup";
-
+import {SigninScreen as Signin} from './Screens/AuthenticationScreens/Signin';
+import {SignupScreen as Signup} from './Screens/AuthenticationScreens/Signup/Signup';
 
 const WelcomeStack = createDrawerNavigator(
   {
-    Home: {screen: Welcome,
+    Home: {
+      screen: Welcome,
       navigationOptions: {
-          header: null,
+        header: null,
       },
     },
-    
   },
   // {
   //     contentComponent: DrawerNav
@@ -32,42 +33,49 @@ const AuthStack = createStackNavigator({
   Signin: {
     screen: Signin,
     navigationOptions: {
-        header: null,
+      header: null,
     },
   },
 
   Signup: {
     screen: Signup,
     navigationOptions: {
-        header: null,
+      header: null,
     },
   },
- 
-}); 
+});
 
 const MainStack = createStackNavigator({
+  Home: {screen: WelcomeStack, navigationOptions: {header: null}},
 
-  wel:{screen:WelcomeStack, navigationOptions:{header:null}},
-
-  ServiceProviders:{
-    screen:ListServiceProviders,
+  ServiceProviders: {
+    screen: ListServiceProviders,
     navigationOptions: {
       header: null,
+    },
   },
+
+  SearchServiceProviders: {
+    screen: SearchServiceProvider,
+    navigationOptions: {
+      header: null,
+    },
+  },
+
+  Shack: {
+    screen: Shack,
+    navigationOptions: {
+      header: null,
+    },
   },
 
   Map: {
     screen: MapView,
     navigationOptions: {
-        header: null,
+      header: null,
     },
   },
-})
-
-
-
-
-
+});
 
 const Navigator = createSwitchNavigator({
   // Splash: {
@@ -80,7 +88,7 @@ const Navigator = createSwitchNavigator({
   AuthLoading: {
     screen: AuthLoading,
     navigationOptions: {
-        header: null,
+      header: null,
     },
   },
 
@@ -88,8 +96,7 @@ const Navigator = createSwitchNavigator({
 
   WelcomeStack: WelcomeStack,
 
-  Main:MainStack
-
+  Main: MainStack,
 });
 
 const navigate = createAppContainer(Navigator);

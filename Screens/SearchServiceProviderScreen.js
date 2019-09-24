@@ -24,8 +24,8 @@ import AndroidBackIcon from 'react-native-vector-icons/Feather';
 import {inputStyle} from '../asset/styles/inputTextStyle';
 
 import SearchIcon from 'react-native-vector-icons/Ionicons';
-import Hamburger from 'react-native-vector-icons/FontAwesome5';
-
+import SearchIcon2 from 'react-native-vector-icons/FontAwesome5';
+import EyeGlassIcon from 'react-native-vector-icons/SimpleLineIcons';
 
 const searchIcon = (
   <SearchIcon
@@ -34,31 +34,19 @@ const searchIcon = (
   />
 );
 
-const iosIcon = (
-  <IosBackIcon
-    size={18}
-    // style={{margin:12}}
-    name="ios-arrow-down"
-  />
-);
+const searchIcon2 = <SearchIcon2 name ="searchengin" size={100} color="#1222"/>
 
-const androidIcon = (
-  <AndroidBackIcon
-    size={20}
-    //  style={{margin:12}}
-    name="arrow-down"
-  />
-);
+const glassIcon = <EyeGlassIcon name ="eyeglass" size={30} color={colors.primary}/>
 
-export class ListServiceProviderScreen extends Component {
+
+export class SearchServiceProviderScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      hasLocation: false,
       searchString: '',
-      latitude: null,
-      longitude: null,
+      onFocusTextInput:false,
+     
       data:[
         {
           _id:"1",
@@ -115,13 +103,12 @@ export class ListServiceProviderScreen extends Component {
       ]
     };
     this._onFindShackClick = this._onFindShackClick.bind(this);
-    this._notNotClick = this._notNotClick.bind(this);
     this._handleSearchChange = this._handleSearchChange.bind(this);
-    this._listItems=this._listItems.bind(this);
 
   }
 
   componentDidMount() {
+    this.setState({onFocusTextInput:true})
     // Platform.OS==="android" &&(
     //   Geolocation.getCurrentPosition((position)=>
     // {
@@ -143,18 +130,13 @@ export class ListServiceProviderScreen extends Component {
     this.setState({searchString: text});
   }
 
-  _notNotClick() {
-    // this.setState({hasLocation:!this.state.hasLocation})
-    this.props.navigation.goBack();
-  }
+  
 
- _listItems(){
-  return 
- }
+
 
   render() {
     return (
-      <SafeAreaView style={{width: '100%', height: '100%'}}>
+      <SafeAreaView style={styles.container}>
         <Header
           title="Find a Shack"
           iconRight={searchIcon}
@@ -166,88 +148,47 @@ export class ListServiceProviderScreen extends Component {
               onChangeText={text => {
                 this._handleSearchChange(text);
               }}
-              placeholder="Search city, state,or location"
-              onFocus={() => this.props.navigation.navigate("SearchServiceProviders")}
+              placeholder="Search city, state, or location"
+              // onFocus={() => this.props.navigation.goBack()}
+              autoFocus
             />
           }
         />
-
-        <MiniHeader title="Nearby" icon={<Hamburger name="hamburger" size={30} color={colors.primary}/>}/>
+        <MiniHeader title="Nearby" icon={glassIcon}/>
         
-        <FlatList
+        {/* <FlatList
           data={this.state.data}
           renderItem={({item})=><ListItemServiceProvider 
           data={item} 
-          onStartOrderClick={()=>this.props.navigation.navigate("Home", {selectedServoceProvider:true, serviceProvider:this.state.data[0]})}/>}
+          onStartOrderClick={()=>alert(new Date().toUTCString())}/>}
           keyExtractor={item=>item._id}
-        />
+        /> */}
 
-        {/* modal component */}
-        <Modal style visible={this.state.hasLocation} transparent>
-          <View style={basicModalStyle.container}>
-            <View style={{marginTop: 20}}>
-              <BackButton
-                onPress={this._onFindShackClick}
-                icon={Platform.OS === 'ios' ? iosIcon : androidIcon}
-              />
-            </View>
-            <BottomContainer>
-              <View style={styles.modalContent}>
-                <View style={styles.modalContentTop}>
-                  <Text style={styles.modalContentTopHeading}>
-                    Find a Shack
-                  </Text>
-                  <Text style={styles.modalContentTopText}>
-                    Enable location services to automatically find the nearest
-                    Shacks
-                  </Text>
-                </View>
+        <View style={styles.placeholderSearchIcon}>
+         {searchIcon2}
+         <Text style={styles.placeholderSearchText}>Looking for a specific Shack? </Text>
+         <Text style={styles.placeholderSearchText}>Start Searching! </Text>
+        </View>
 
-                <View style={styles.modalContentBottom}>
-                  <ButtonPrimary
-                    value="Find Shacks"
-                    onPress={this._onFindShackClick}
-                  />
-                  <ButtonPrimary
-                    value="Not Now"
-                    onPress={this._notNotClick}
-                    backgroundColor={colors.white}
-                    textColor="#000"
-                    borderColor="#1222"
-                  />
-                </View>
-              </View>
-            </BottomContainer>
-          </View>
-        </Modal>
-        {/* modal component */}
       </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  modalContent: {
-    backgroundColor: colors.white,
-    paddingVertical: 20,
-    paddingHorizontal: 15,
+  container:{
+    flex:1
   },
 
-  modalContentTop: {
-    marginVertical: 5,
+  placeholderSearchIcon:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+    alignContent:"center",
   },
-  modalContentTopHeading: {
-    fontFamily:
-      Platform.OS === 'ios' ? fonts.primary_ios : fonts.primary_android,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  modalContentTopText: {
-    fontSize: 13,
-    color: '#999',
-  },
-  modalContentBottom: {
-    // width:"100%",
-    marginVertical: 10,
-  },
+
+  placeholderSearchText:{
+    color:"#1234"
+  }
+
 });

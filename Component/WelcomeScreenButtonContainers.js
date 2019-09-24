@@ -1,9 +1,18 @@
 import React from 'react';
-import {StyleSheet, View, Text, Platform, TouchableOpacity, Alert} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import BuggerIcon from 'react-native-vector-icons/FontAwesome5';
 import Clock from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../asset/colors';
 import {ButtonPrimary, ButtonWithIcon} from './UIComponent/Button';
+import IconArrowRight from 'react-native-vector-icons/Ionicons';
+
 
 const icon1 = <BuggerIcon name="hamburger" size={40} color={colors.primary} />;
 
@@ -11,8 +20,8 @@ const icon2 = <BuggerIcon name="hamburger" size={20} color={colors.primary} />;
 
 const clock = <Clock name="restore-clock" size={20} color={colors.primary} />;
 
-const loggedIn = true;
 
+const loggedIn = true;
 
 const IsLoggedIn = props => {
   return (
@@ -27,7 +36,6 @@ const IsLoggedIn = props => {
   );
 };
 
-
 const NotLoggedIn = props => {
   return (
     <TouchableOpacity onPress={() => props.navigation.navigate('Auth')}>
@@ -41,13 +49,13 @@ const NotLoggedIn = props => {
   );
 };
 
-const _handleStartPress=(props)=>{
-  if(!loggedIn){
-    props.navigation.navigate("Signin")
-  }else{
-    props.navigation.navigate("ServiceProviders");
+const _handleStartPress = props => {
+  if (!loggedIn) {
+    props.navigation.navigate('Signin');
+  } else {
+    props.navigation.navigate('ServiceProviders');
   }
-}
+};
 
 export const HomeTopContainer = props => {
   return (
@@ -61,25 +69,53 @@ export const HomeTopContainer = props => {
 };
 
 export const HomeBottomContainer = props => {
+  const {navigation} = props;
+  const selectedServiceProvider = navigation.getParam(
+    'selectedServoceProvider',
+    false,
+  );
+  const serviceProvider = navigation.getParam('serviceProvider', {});
+
   return (
     <View style={bottomContainerStyle.container}>
-      <View style={bottomContainerStyle.callToActionView}>
-        <View style={bottomContainerStyle.callToActionViewText}>
-          <Text style={bottomContainerStyle.callToActionViewTextTop}>
-            Choose a Shack
-          </Text>
-          <Text style={bottomContainerStyle.callToActionViewTextTopBottom}>
-            Start by choosing a location
-          </Text>
-        </View>
+      {selectedServiceProvider && Object.keys(serviceProvider).length > 0 ? (
+        <View style={bottomContainerStyle.callToActionView}>
+          <View style={bottomContainerStyle.callToActionViewText}>
+            <Text style={bottomContainerStyle.callToActionViewTextTop}>
+              {serviceProvider.name}
+            </Text>
+            <Text style={[bottomContainerStyle.callToActionViewTextTopBottom,{flexWrap:"wrap"}]}>
+              Pickup at: {serviceProvider.address}
+            </Text>
+          </View>
 
-        <ButtonPrimary
-          value="Start"
-          backgroundColor={colors.primary_button}
-          textColor={colors.white}
-          onPress={()=>_handleStartPress(props)}
-        />
-      </View>
+          <View>
+            <TouchableOpacity onPress={()=>props.navigation.navigate("Shack")}>
+                <IconArrowRight name="ios-arrow-forward" size={30}/>
+            </TouchableOpacity>
+          
+          </View>
+        </View>
+      ) : (
+        <View style={bottomContainerStyle.callToActionView}>
+          <View style={bottomContainerStyle.callToActionViewText}>
+            <Text style={bottomContainerStyle.callToActionViewTextTop}>
+              Choose a Shack
+            </Text>
+            <Text style={bottomContainerStyle.callToActionViewTextTopBottom}>
+              Start by choosing a location
+            </Text>
+          </View>
+
+          <ButtonPrimary
+            value="Start"
+            backgroundColor={colors.primary_button}
+            textColor={colors.white}
+            onPress={() => _handleStartPress(props)}
+          />
+        </View>
+      )}
+
       <View style={bottomContainerStyle.bottomButtonsView}>
         <View style={bottomContainerStyle.bottomButtonsViewButton}>
           <ButtonWithIcon
@@ -143,7 +179,7 @@ const bottomContainerStyle = StyleSheet.create({
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     position: 'relative',
-    paddingBottom:1
+    paddingBottom: 1,
   },
 
   callToActionView: {

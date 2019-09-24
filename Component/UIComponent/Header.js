@@ -41,6 +41,18 @@ Header.defaultProps = {
   onIconLeftClick:()=>{}
 };
 
+
+export const MiniHeader=({icon,title})=>{
+return(
+  <View style={styles.miniHeader}>
+    <Text style={styles.miniHeaderIcon}>{icon}</Text>
+    <Text style={styles.miniHeaderTitle}>{title}</Text>
+  </View>
+  )
+}
+
+
+
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
@@ -66,5 +78,25 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
     fontSize:20,
     fontFamily:Platform.OS==="ios"?fonts.primary_ios:fonts.primary_android
+  },
+
+  miniHeader:{
+    flexDirection:"row",
+    paddingVertical:20,
+    paddingHorizontal:10,
+    borderBottomWidth:1,
+    borderBottomColor:"#1222"
+  },
+
+  miniHeaderTitle:{
+    fontWeight:"bold",
+    fontFamily:Platform.OS==="ios"?fonts.primary_ios:fonts.primary_android,
+    alignSelf:"center"
+  },
+
+  miniHeaderIcon:{
+    marginHorizontal:10
   }
+
+
 });

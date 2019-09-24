@@ -5,15 +5,20 @@ import {colors} from '../asset/colors';
 import {fonts} from '../asset/font';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ButtonPrimary} from './UIComponent/Button';
+import { isBusinessDayToday } from "../helper/helper";
 
 export const ListItemServiceProvider = ({data, onStartOrderClick}) => {
   const CollapsibleHeader = () => {
+    // const isToday= isBusinessDayToday(data.businessDays);
     return (
       <View>
         <Text style={styles.collapsibleHeaderHeadingTop}>{data.name}</Text>
         <Text style={styles.collapsibleHeaderHeadingBottom}>
           {data.address}
         </Text>
+        {/* <Text style={styles.collapsibleHeaderHeadingBottom}>
+          {isToday.status? `Today ${isToday.openingHour}-${isToday.closingHour}`:"Closed"}}
+        </Text> */}
       </View>
     );
   };
@@ -22,8 +27,8 @@ export const ListItemServiceProvider = ({data, onStartOrderClick}) => {
     return (
       <View style={styles.collapsibleFooter}>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          <Text style={{flexGrow: 1, alignSelf: 'center'}}>
-            Next Available : ASAP
+          <Text style={styles.collapsibleFooterTextMain}>
+            Next Available: ASAP
           </Text>
           <View>
             <ButtonPrimary
@@ -41,8 +46,17 @@ export const ListItemServiceProvider = ({data, onStartOrderClick}) => {
 
   const CollapsibleContent = () => {
     return (
-      <View>
-        <Text>{JSON.stringify(data.businessDays)}</Text>
+      <View style={styles.collapsibleContent}>
+        {data.businessDays.length > 0 &&
+          data.businessDays.map((day, index) => {
+            return (
+              <Text key={index} style={styles.collapsibleContentText}>
+                {day.day}
+                {'  '}
+                {day.openingHour} - {day.closingHour}
+              </Text>
+            );
+          })}
       </View>
     );
   };
@@ -71,5 +85,18 @@ const styles = StyleSheet.create({
   collapsibleFooter: {
     flex: 1,
     // width:Dimensions.get("window").width
+  },
+  collapsibleFooterTextMain: {
+    flexGrow: 1,
+    alignSelf: 'center',
+    fontSize: 13,
+    color: '#999',
+  },
+  collapsibleContent: {
+    marginBottom: 5,
+  },
+  collapsibleContentText: {
+    fontSize: 13,
+    color: '#999',
   },
 });
