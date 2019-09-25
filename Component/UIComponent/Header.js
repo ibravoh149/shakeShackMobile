@@ -10,7 +10,24 @@ export const Header = ({
   headerBottomContent,
   onIconLeftClick,
   onIconRightClick,
+  customize,
+  children
 }) => {
+  if(customize){
+    return(
+      <View style={{
+        position: 'relative',
+        top: 0,
+        left: 0,
+        right: 0,
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        minHeight: 40,
+      }}>
+        {children}
+      </View>
+    )
+  }
   return (
     <View style={styles.container}>
       <View style={styles.headerTop}>
