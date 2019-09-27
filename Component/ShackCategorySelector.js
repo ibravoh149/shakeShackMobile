@@ -40,7 +40,7 @@ export const CatSelectors = () => {
     },
     {
       name: 'burger',
-      selected: false,
+      selected: true,
       icon: <Icon name="hamburger" size={30} color={colors.primary} />,
     },
     {
